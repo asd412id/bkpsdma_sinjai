@@ -259,15 +259,15 @@ class PegawaiController extends BaseController
               if ($arr[6][$kcol] == 13) {
                 $data['golongan'] = trim($col)??null;
               }
-              if ($arr[6][$kcol] == 19 && $arr[$krow][$kcol] != '') {
+              if ($arr[6][$kcol] == 19 && trim($col) != '') {
                 $data['jabatan'] = trim($col)??null;
-              }
-              if ($arr[6][$kcol] == 21 && $arr[$krow][$kcol] != '') {
+              }elseif ($arr[6][$kcol] == 21 && trim($col) != '') {
                 $data['jabatan'] = trim($col)??null;
-              }
-              if ($arr[6][$kcol] == 22 && $arr[$krow][$kcol] != '') {
+              }elseif ($arr[6][$kcol] == 22 && trim($col) != '') {
                 $data['jabatan'] = trim($col)??null;
-              }
+              }else{
+				$data['jabatan'] = null;  
+			  }
               if ($arr[6][$kcol] == 23) {
                 $data['instansi'] = trim($col)??null;
               }
