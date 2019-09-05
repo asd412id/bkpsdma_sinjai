@@ -22,7 +22,7 @@ Route::group(['middleware'=>'auth'], function()
 
   Route::get('/download/template', function()
   {
-    return response()->download(base_path('assets/files/rptPnsExportData.xls'));
+    return response()->download(base_path('assets/files/rptPnsExportData.xlsx'));
   })->name('download.template');
 
   Route::group(['prefix'=>'/pegawai-form'], function()
