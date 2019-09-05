@@ -122,10 +122,6 @@ class MainController extends BaseController
       'q.digits' => 'Jumlah NIP yang dimasukkan harus 18 angka!'
     ])->validate();
 
-    $pegawai = Pegawai::where('nip_baru',$r->q)
-    ->limit(20)
-    ->first();
-
     return redirect()->route('search.detail',['nip'=>$r->q]);
   }
 
