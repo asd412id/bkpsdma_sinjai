@@ -28,7 +28,7 @@ class PegawaiController extends BaseController
   {
 
     if (request()->ajax()) {
-      $data = Pegawai::orderBy('id','asc')->get();
+      $data = Pegawai::orderBy('id','asc');
       return DataTables::of($data)
       ->addIndexColumn()
       ->addColumn('jk',function($row){

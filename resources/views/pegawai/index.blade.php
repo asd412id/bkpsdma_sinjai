@@ -51,7 +51,7 @@
     serverSide: true,
     ajax: "{{ route('pegawai.index') }}",
     columns: [
-      {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+      {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
       {data: 'nip_baru', name: 'nip_baru'},
       {data: 'nama', name: 'nama'},
       {data: 'jk', name: 'jk'},
