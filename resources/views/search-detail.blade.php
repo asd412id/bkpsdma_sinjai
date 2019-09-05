@@ -13,14 +13,6 @@
         </div>
         <div class="wrapper">
           <div class="card card-body">
-            <form class="form-search mb-4" action="{{ route('search.index') }}" method="get">
-              <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Masukkan NIP atau Nama Pegawai ..." required>
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Cari Pegawai</button>
-                </div>
-              </div>
-            </form>
             @if ($data)
               <h3 class="mb-4">Biodata Pegawai Negeri Sipil: <strong>{{ $data->gelar_depan.' '.$data->nama.($data->gelar_belakang?', '.$data->gelar_belakang:'') }}</strong></h3>
               <div class="clearfix"></div>
