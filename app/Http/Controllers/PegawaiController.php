@@ -265,9 +265,7 @@ class PegawaiController extends BaseController
                 $data['jabatan'] = trim($col)??null;
               }elseif ($arr[6][$kcol] == 22 && trim($col) != '') {
                 $data['jabatan'] = trim($col)??null;
-              }else{
-				$data['jabatan'] = null;  
-			  }
+              }
               if ($arr[6][$kcol] == 23) {
                 $data['instansi'] = trim($col)??null;
               }
