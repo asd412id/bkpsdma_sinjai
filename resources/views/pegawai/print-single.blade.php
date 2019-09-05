@@ -39,7 +39,7 @@
         <tr>
           <th width="200">Nama</th>
           <th width="1">:</th>
-          <td>{{ $data->nama }}</td>
+          <td>{{ $data->gelar_depan.' '.$data->nama.($data->gelar_belakang?', '.$data->gelar_belakang:'') }}</td>
         </tr>
         <tr>
           <th>Jenis Kelamin</th>
@@ -47,7 +47,7 @@
           <td>{{ $data->jenis_kelamin==1?'Pria':'Wanita' }}</td>
         </tr>
         <tr>
-          <th>Alamat</th>
+          <th>Tempat Lahir</th>
           <th width="1">:</th>
           <td>{{ $data->alamat }}</td>
         </tr>
@@ -75,14 +75,19 @@
           <td>{{ $data->golongan }}</td>
         </tr>
         <tr>
-          <th>Nama Instansi</th>
+          <th>Jabatan</th>
+          <th width="1">:</th>
+          <td>{{ $data->jabatan }}</td>
+        </tr>
+        <tr>
+          <th>Unit Kerja</th>
           <th width="1">:</th>
           <td>{{ $data->instansi }}</td>
         </tr>
         <tr>
-          <th>Jabatan</th>
+          <th>Unit Kerja Induk</th>
           <th width="1">:</th>
-          <td>{{ $data->jabatan }}</td>
+          <td>{{ $data->instansi_induk }}</td>
         </tr>
         <tr>
           <th>Status</th>

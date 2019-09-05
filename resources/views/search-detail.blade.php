@@ -22,7 +22,7 @@
               </div>
             </form>
             @if ($data)
-              <h3 class="mb-4">Biodata Pegawai Negeri Sipil: <strong>{{ $data->nama }}</strong></h3>
+              <h3 class="mb-4">Biodata Pegawai Negeri Sipil: <strong>{{ $data->gelar_depan.' '.$data->nama.($data->gelar_belakang?', '.$data->gelar_belakang:'') }}</strong></h3>
               <div class="clearfix"></div>
               <div class="row">
                 <div class="col-sm-6">
@@ -33,7 +33,7 @@
                         <tr>
                           <th width="200">Nama</th>
                           <th width="1">:</th>
-                          <td>{{ $data->nama }}</td>
+                          <td>{{ $data->gelar_depan.' '.$data->nama.($data->gelar_belakang?', '.$data->gelar_belakang:'') }}</td>
                         </tr>
                         <tr>
                           <th>Jenis Kelamin</th>
@@ -41,7 +41,7 @@
                           <td>{{ $data->jenis_kelamin==1?'Pria':'Wanita' }}</td>
                         </tr>
                         <tr>
-                          <th>Alamat</th>
+                          <th>Tempat Lahir</th>
                           <th width="1">:</th>
                           <td>{{ $data->alamat }}</td>
                         </tr>
@@ -75,14 +75,19 @@
                           <td>{{ $data->golongan }}</td>
                         </tr>
                         <tr>
-                          <th>Nama Instansi</th>
+                          <th>Jabatan</th>
+                          <th width="1">:</th>
+                          <td>{{ $data->jabatan }}</td>
+                        </tr>
+                        <tr>
+                          <th>Unit Kerja</th>
                           <th width="1">:</th>
                           <td>{{ $data->instansi }}</td>
                         </tr>
                         <tr>
-                          <th>Jabatan</th>
+                          <th>Unit Kerja Induk</th>
                           <th width="1">:</th>
-                          <td>{{ $data->jabatan }}</td>
+                          <td>{{ $data->instansi_induk }}</td>
                         </tr>
                         <tr>
                           <th>Status</th>
@@ -92,6 +97,9 @@
                       </table>
                     </div>
                   </div>
+                </div>
+                <div class="col-sm-12 text-center">
+                  <div class="alert alert-success d-inline-block">Apabila terdapat kesalahan pada data terkait, agar segera melapor ke kantor BKPSDMA Kabupaten Sinjai dengan membawa data otentik.</div>
                 </div>
               </div>
             @else

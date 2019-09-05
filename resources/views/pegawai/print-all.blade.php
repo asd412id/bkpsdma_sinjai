@@ -21,7 +21,7 @@
       html,body{
         width: 100%;
         margin: 15px;
-        font-size: 0.93em;
+        font-size: 0.91em;
         font-family: DejaVu Sans;
       }
     </style>
@@ -34,17 +34,23 @@
         <th>NIP</th>
         <th>NAMA</th>
         <th>JENIS KELAMIN</th>
-        <th>PANGKAT/GOLONGAN</th>
+        <th>PANGKAT/GOL.</th>
+        <th>JABATAN</th>
         <th>INSTANSI</th>
+        <th>INSTANSI INDUK</th>
+        <th>STATUS</th>
       </tr>
       @foreach ($data as $key => $d)
         <tr>
           <td align="center">{{ $key+1 }}</td>
           <td>{{ $d->nip_baru }}</td>
-          <td>{{ $d->nama }}</td>
+          <td style="width: 150px !important">{{ $d->gelar_depan.' '.$d->nama.($d->gelar_belakang?', '.$d->gelar_belakang:'') }}</td>
           <td align="center">{{ $d->jenis_kelamin==1?'Pria':'Wanita' }}</td>
           <td align="center">{{ $d->golongan }}</td>
+          <td>{{ $d->jabatan }}</td>
           <td>{{ $d->instansi }}</td>
+          <td>{{ $d->instansi_induk }}</td>
+          <td align="center">{{ $d->status }}</td>
         </tr>
       @endforeach
     </table>

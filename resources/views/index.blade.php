@@ -9,12 +9,15 @@
         <h3>BKPSDMA Kabupaten Sinjai</h3>
         <form class="form-search" action="{{ route('search.index') }}" method="get">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Masukkan NIP atau Nama Pegawai ..." autofocus required>
+            <input type="text" name="q" class="form-control" placeholder="Masukkan NIP Pegawai ..." autofocus required>
             <div class="input-group-append">
               <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Cari Pegawai</button>
             </div>
           </div>
         </form>
+        @if ($errors->any())
+          <div class="alert alert-warning d-inline-block text-danger w-notif">{{ $errors->all()[0] }}</div>
+        @endif
         <div class="footer">
           <div class="copyright text-center my-auto">
             <span>&copy; 2019 Copyright BKPSDMA</span>

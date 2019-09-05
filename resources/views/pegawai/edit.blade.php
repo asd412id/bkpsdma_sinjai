@@ -26,6 +26,18 @@
               </div>
             </div>
             <div class="row form-group">
+              <label for="" class="control-label col-sm-12">Gelar Depan</label>
+              <div class="col-sm-12">
+                <input type="text" name="gelar_depan" class="form-control" value="{{ $data->gelar_depan }}">
+              </div>
+            </div>
+            <div class="row form-group">
+              <label for="" class="control-label col-sm-12">Gelar Belakang</label>
+              <div class="col-sm-12">
+                <input type="text" name="gelar_belakang" class="form-control" value="{{ $data->gelar_belakang }}">
+              </div>
+            </div>
+            <div class="row form-group">
               <label for="" class="control-label col-sm-12">Jenis Kelamin</label>
               <div class="col-sm-12">
                 @php
@@ -76,23 +88,23 @@
               <label for="" class="control-label col-sm-12">Pangkat/Golongan</label>
               @php
                 $pg = [
-                  'Juru Muda / Ia',
-                  'Juru Muda Tingkat 1 / Ib',
-                  'Juru / Ic',
-                  'Juru Tingkat 1 / Id',
-                  'Pengatur Muda / IIa',
-                  'Pengatur Muda Tingkat 1 / IIb',
-                  'Pengatur / IIc',
-                  'Pengatur Tingkat 1 / IId',
-                  'Penata Muda / IIIa',
-                  'Penata Muda Tingkat 1 / IIIb',
-                  'Penata / IIIc',
-                  'Penata Tingkat 1 / IIId',
-                  'Pembina / IVa',
-                  'Pembina Tingkat 1 / IVb',
-                  'Pembina Utama Muda / IVc',
-                  'Pembina Utama Madya / IVd',
-                  'Pembina Utama / IVe',
+                  'I/a',
+                  'I/b',
+                  'I/c',
+                  'I/d',
+                  'II/a',
+                  'II/b',
+                  'II/c',
+                  'II/d',
+                  'III/a',
+                  'III/b',
+                  'III/c',
+                  'III/d',
+                  'IV/a',
+                  'IV/b',
+                  'IV/c',
+                  'IV/d',
+                  'IV/e',
                 ];
               @endphp
               <div class="col-sm-12">
@@ -104,28 +116,27 @@
               </div>
             </div>
             <div class="row form-group">
-              <label for="" class="control-label col-sm-12">Nama Instansi</label>
-              <div class="col-sm-12">
-                <input type="text" name="instansi" class="form-control" value="{{ $data->instansi }}" required>
-              </div>
-            </div>
-            <div class="row form-group">
               <label for="" class="control-label col-sm-12">Jabatan</label>
               <div class="col-sm-12">
                 <input type="text" name="jabatan" class="form-control" value="{{ $data->jabatan }}">
               </div>
             </div>
             <div class="row form-group">
+              <label for="" class="control-label col-sm-12">Unit Kerja</label>
+              <div class="col-sm-12">
+                <input type="text" name="instansi" class="form-control" value="{{ $data->instansi }}" required>
+              </div>
+            </div>
+            <div class="row form-group">
+              <label for="" class="control-label col-sm-12">Unit Kerja Induk</label>
+              <div class="col-sm-12">
+                <input type="text" name="instansi_induk" class="form-control" value="{{ $data->instansi_induk }}" required>
+              </div>
+            </div>
+            <div class="row form-group">
               <label for="" class="control-label col-sm-12">Status</label>
               <div class="col-sm-12">
-                @php
-                  $jk = ['aktif','pensiun'];
-                @endphp
-                <select class="form-control" name="status">
-                  @foreach ($jk as $key => $p)
-                    <option {{ $data->status==$p?'selected':'' }} value="{{ $p }}">{{ ucwords($p) }}</option>
-                  @endforeach
-                </select>
+                <input type="text" name="status" class="form-control" value="{{ $data->status }}" required>
               </div>
             </div>
           </div>

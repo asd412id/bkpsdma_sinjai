@@ -106,6 +106,43 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Import File Excel (*.xlsx, *.xls, *.ods)</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form id="form-import" action="{{ route('pegawai.import') }}" method="post" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <input type="file" name="file_excel" class="form-control" accept=".xlsx,.xls,.ods" required>
+            <div class="mt-2">
+              <label for="update">
+                <input type="radio" name="status" value="update" id="update" checked>
+                Update Data <em>(Meperbaharui data lama)</em>
+              </label>
+              <label for="new">
+                <input type="radio" name="status" value="new" id="new">
+                Data Baru <em class="text-danger">(Data lama akan diganti dengan data dari file excel)</em>
+              </label>
+            </div>
+            <div class="mt-1 text-center">
+              <div class="alert alert-success">
+                <em>Format file Excel harus sesuai dengan template! Silahkan <a href="{{ route('download.template') }}" class="text-danger font-weight-bold">download template</a> berikut untuk menginput data.</em>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success"><i class="fas fa-file-upload"></i> Import File</button>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ url('assets') }}/vendor/jquery/jquery.min.js"></script>
@@ -119,6 +156,12 @@
   <script src="{{ url('assets') }}/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="{{ url('assets') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="{{ url('assets') }}/vendor/fancybox/jquery.fancybox.min.js"></script>
+  <script type="text/javascript">
+  $("#form-import").submit(function(){
+    $(this).find("button[type='submit']").prop('disabled',true);
+    $(this).find("button[type='submit']").html('Sedang mengimport ...');
+  })
+  </script>
   @yield('foot')
 
 </body>

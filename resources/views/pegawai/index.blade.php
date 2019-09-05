@@ -11,13 +11,18 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-4 text-gray-800">Daftar Pegawai</h1>
     <div class="float-right">
-      <a href="javascript:void()" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm btn-print" target="_blank"><i class="fas fa-print text-white-50"></i> Cetak Data</a>
+      <a href="javascript:void()" data-toggle="modal" data-target="#importModal" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-file-excel text-white-50"></i> Import Excel</a>
+      <a href="javascript:void()" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm btn-print" target="_blank"><i class="fas fa-print text-white-50"></i> Cetak Data</a>
       <a href="{{ route('pegawai.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus text-white-50"></i> Tambah Data</a>
     </div>
   </div>
 
   @if (session()->has('message'))
     <div class="alert alert-success"><i class="fa fa-fw fa-check"></i> {!! session()->get('message') !!}</div>
+  @elseif ($errors->any())
+    @foreach ($errors->all() as $key => $err)
+      <div class="alert alert-danger"><i class="fa fa-fw fa-exclamation"></i> {{ $err }}</div>
+    @endforeach
   @endif
 
   <table class="table table-hover table-stripped data-table">
@@ -77,13 +82,14 @@
       }
     },
     'drawCallback': function(settings){
+      var start = (settings.json.input.start/settings.json.input.length)+1;
       var rows = settings.json.input.length;
       var dta = settings.json.input.search.value;
       var uri = 'all';
       if (dta!=null) {
         uri = encodeURIComponent(dta.trim());
       }
-      $(".btn-print").prop('href','{{ route('pegawai.print.all') }}?q='+uri+'&rows='+rows);
+      $(".btn-print").prop('href','{{ route('pegawai.print.all') }}?q='+uri+'&rows='+rows+'&page='+start);
       $(".hapus").on('click',function(){
         if (!confirm('Hapus data ini?')) {
           return false;

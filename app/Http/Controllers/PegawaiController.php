@@ -15,6 +15,11 @@ use Validator;
 use Storage;
 use PDF;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Ods;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 class PegawaiController extends BaseController
 {
   use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -23,7 +28,7 @@ class PegawaiController extends BaseController
   {
 
     if (request()->ajax()) {
-      $data = Pegawai::latest()->get();
+      $data = Pegawai::orderBy('id','asc')->get();
       return DataTables::of($data)
       ->addIndexColumn()
       ->addColumn('jk',function($row){
@@ -96,12 +101,15 @@ class PegawaiController extends BaseController
       'nip_baru' => $r->nip_baru,
       'nip_lama' => $r->nip_lama,
       'nama' => $r->nama,
+      'gelar_depan' => $r->gelar_depan,
+      'gelar_belakang' => $r->gelar_belakang,
       'jenis_kelamin' => $r->jenis_kelamin,
       'alamat' => $r->alamat,
       'telp' => $r->telp,
       'golongan' => $r->golongan,
-      'instansi' => $r->instansi,
       'jabatan' => $r->jabatan,
+      'instansi' => $r->instansi,
+      'instansi_induk' => $r->instansi_induk,
       'status' => $r->status,
     ]);
 
@@ -180,14 +188,16 @@ class PegawaiController extends BaseController
       $q->where('nama','like',$role)
       ->orWhere('nip_baru','like',$role)
       ->orWhere('nip_lama','like',$role)
-      ->orWhere('instansi','like',$role)
       ->orWhere('golongan','like',$role)
       ->orWhere('jabatan','like',$role)
+      ->orWhere('instansi','like',$role)
+      ->orWhere('instansi_induk','like',$role)
       ->orWhere('status','like',$role);
       if (strtolower(request()->q) == 'pria' || strtolower(request()->q) == 'wanita') {
         $q->orWhere('jenis_kelamin',(strtolower(request()->q)=='pria'?1:2));
       }
-    })->limit($rows)->get();
+    })
+    ->orderBy('id','asc')->paginate($rows, ['*'], 'page');
 
 
     $pdf = PDF::loadView('pegawai.print-all',[
@@ -196,5 +206,94 @@ class PegawaiController extends BaseController
     ]);
 
     return $pdf->setPaper([0,0,609.449,935.433],'landscape')->stream('Data Pegawai ASN - BKPSDMA');
+  }
+
+  public function import(Request $r)
+  {
+    if ($r->file_excel == null) {
+      return redirect()->back()->withErrors('File harus diupload!');
+    }
+    if ($r->file('file_excel')->isValid()) {
+      $ext = ['xlsx','xls','bin','ods'];
+      if (in_array($r->file_excel->getClientOriginalExtension(),$ext)) {
+        $spreadsheet = IOFactory::load($r->file_excel->path());
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $arr = $spreadsheet->getSheet(0)->toArray();
+
+        if ($arr[3][1] != 'NIP') {
+          return redirect()->back()->withErrors('File yang diupload tidak sesuai format!');
+        }
+
+        if ($r->status == 'new') {
+          Pegawai::truncate();
+        }
+
+        foreach ($arr as $krow => $row) {
+          if ($krow > 6) {
+            if ($arr[$krow][1] == '') {
+              continue;
+            }
+            $data = [];
+            foreach ($row as $kcol => $col) {
+              if ($arr[6][$kcol] == 2) {
+                $data['nip_baru'] = (int)$col;
+                $data ['jenis_kelamin'] = @$col[14]??1;
+                $data['uuid'] = (string)Str::uuid();
+              }
+              if ($arr[6][$kcol] == 3) {
+                $data['nip_lama'] =$col?(int)$col:null;
+              }
+              if ($arr[6][$kcol] == 4) {
+                $data['nama'] = $col;
+              }
+              if ($arr[6][$kcol] == 5) {
+                $data['gelar_depan'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 6) {
+                $data['gelar_belakang'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 7) {
+                $data['alamat'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 13) {
+                $data['golongan'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 19 && $arr[$krow][$kcol] != '') {
+                $data['jabatan'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 21 && $arr[$krow][$kcol] != '') {
+                $data['jabatan'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 22 && $arr[$krow][$kcol] != '') {
+                $data['jabatan'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 23) {
+                $data['instansi'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 24) {
+                $data['instansi_induk'] = $col??null;
+              }
+              if ($arr[6][$kcol] == 27) {
+                $data['status'] = $col??null;
+              }
+              if ($kcol > 29) {
+                break;
+              }
+            }
+            $import = Pegawai::updateOrCreate(['nip_baru'=>$data['nip_baru']],$data);
+          }
+        }
+
+        if ($import) {
+          return redirect()->back()->with('message', 'Data berhasil diimport.');
+        }else {
+          return redirect()->back()->with('message', 'Kesalahan saat mengimport data atau format file tidak benar!');
+        }
+
+      }
+
+    }
+    return redirect()->back()->withErrors('File yang diupload tidak sesuai format!');
   }
 }

@@ -4,7 +4,7 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-4 text-gray-800">{{ str_replace(['Detail Pegawai',' - BKPSDMA'],'',$title) }}</h1>
     <div class="float-right">
-      <a href="{{ route('pegawai.print.single',['uuid'=>$data->uuid]) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" target="_blank"><i class="fas fa-print text-white-50"></i> Cetak Data</a>
+      <a href="{{ route('pegawai.print.single',['uuid'=>$data->uuid]) }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" target="_blank"><i class="fas fa-print text-white-50"></i> Cetak Data</a>
       <a href="{{ route('pegawai.edit',['uuid'=>$data->uuid]) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-edit text-white-50"></i> Ubah Data</a>
     </div>
   </div>
@@ -24,7 +24,7 @@
             <tr>
               <th width="200">Nama</th>
               <th width="1">:</th>
-              <td>{{ $data->nama }}</td>
+              <td>{{ $data->gelar_depan.' '.$data->nama.($data->gelar_belakang?', '.$data->gelar_belakang:'') }}</td>
             </tr>
             <tr>
               <th>Jenis Kelamin</th>
@@ -32,7 +32,7 @@
               <td>{{ $data->jenis_kelamin==1?'Pria':'Wanita' }}</td>
             </tr>
             <tr>
-              <th>Alamat</th>
+              <th>Tempat Lahir</th>
               <th width="1">:</th>
               <td>{{ $data->alamat }}</td>
             </tr>
@@ -66,14 +66,19 @@
               <td>{{ $data->golongan }}</td>
             </tr>
             <tr>
-              <th>Nama Instansi</th>
+              <th>Jabatan</th>
+              <th width="1">:</th>
+              <td>{{ $data->jabatan }}</td>
+            </tr>
+            <tr>
+              <th>Unit Kerja</th>
               <th width="1">:</th>
               <td>{{ $data->instansi }}</td>
             </tr>
             <tr>
-              <th>Jabatan</th>
+              <th>Unit Kerja Induk</th>
               <th width="1">:</th>
-              <td>{{ $data->jabatan }}</td>
+              <td>{{ $data->instansi_induk }}</td>
             </tr>
             <tr>
               <th>Status</th>

@@ -14,6 +14,7 @@ use App\Models\Pegawai;
 use Validator;
 use Auth;
 use Str;
+use Spreadsheet;
 
 class MainController extends BaseController
 {
@@ -111,20 +112,21 @@ class MainController extends BaseController
     return redirect()->back()->withErrors(['Password tidak sesuai!']);
   }
 
-  public function search($value='')
+  public function search(Request $r)
   {
-    $role = '%'.request()->q.'%';
-    $pegawai = Pegawai::where('nip_baru',request()->q)
-    ->orWhere('nama','like',$role)
+    Validator::make($r->all(),[
+      'q' => 'required|numeric|digits:18'
+    ],[
+      'q.required' => 'Format NIP yang dimasukkan tidak benar!',
+      'q.numeric' => 'Format NIP yang dimasukkan tidak benar!',
+      'q.digits' => 'Jumlah NIP yang dimasukkan harus 18 angka!'
+    ])->validate();
+
+    $pegawai = Pegawai::where('nip_baru',$r->q)
     ->limit(20)
-    ->get();
+    ->first();
 
-    $data = [
-      'title' => 'Hasil Pencarian: '.request()->q.' - BKPSDMA',
-      'data' => $pegawai
-    ];
-
-    return view('search-result',$data);
+    return redirect()->route('search.detail',['nip'=>$r->q]);
   }
 
   public function detail($nip)
@@ -140,4 +142,5 @@ class MainController extends BaseController
 
     return view('search-detail',$data);
   }
+
 }

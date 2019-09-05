@@ -20,12 +20,18 @@ Route::group(['middleware'=>'auth'], function()
     'except'=>['destroy']
   ]);
 
+  Route::get('/download/template', function()
+  {
+    return response()->download(base_path('assets/files/rptPnsExportData.xls'));
+  })->name('download.template');
+
   Route::group(['prefix'=>'/pegawai-form'], function()
   {
     Route::get('/{uuid}/destroy', 'PegawaiController@destroy')->name('pegawai.destroy');
     Route::get('/delete-foto', 'PegawaiController@deleteFoto')->name('pegawai.foto.delete');
     Route::get('/{uuid}/cetak', 'PegawaiController@printSingle')->name('pegawai.print.single');
     Route::get('/cetak', 'PegawaiController@printAll')->name('pegawai.print.all');
+    Route::post('/import', 'PegawaiController@import')->name('pegawai.import');
   });
 
 });
