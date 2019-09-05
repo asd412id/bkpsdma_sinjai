@@ -237,45 +237,45 @@ class PegawaiController extends BaseController
             $data = [];
             foreach ($row as $kcol => $col) {
               if ($arr[6][$kcol] == 2) {
-                $data['nip_baru'] = (int)$col;
-                $data ['jenis_kelamin'] = @$col[14]??1;
+                $data['nip_baru'] = (int)trim($col);
+                $data ['jenis_kelamin'] = trim(@$col[14])??1;
                 $data['uuid'] = (string)Str::uuid();
               }
               if ($arr[6][$kcol] == 3) {
-                $data['nip_lama'] =$col?(int)$col:null;
+                $data['nip_lama'] =$col?(int)trim($col):null;
               }
               if ($arr[6][$kcol] == 4) {
-                $data['nama'] = $col;
+                $data['nama'] = trim($col);
               }
               if ($arr[6][$kcol] == 5) {
-                $data['gelar_depan'] = $col??null;
+                $data['gelar_depan'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 6) {
-                $data['gelar_belakang'] = $col??null;
+                $data['gelar_belakang'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 7) {
-                $data['alamat'] = $col??null;
+                $data['alamat'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 13) {
-                $data['golongan'] = $col??null;
+                $data['golongan'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 19 && $arr[$krow][$kcol] != '') {
-                $data['jabatan'] = $col??null;
+                $data['jabatan'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 21 && $arr[$krow][$kcol] != '') {
-                $data['jabatan'] = $col??null;
+                $data['jabatan'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 22 && $arr[$krow][$kcol] != '') {
-                $data['jabatan'] = $col??null;
+                $data['jabatan'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 23) {
-                $data['instansi'] = $col??null;
+                $data['instansi'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 24) {
-                $data['instansi_induk'] = $col??null;
+                $data['instansi_induk'] = trim($col)??null;
               }
               if ($arr[6][$kcol] == 27) {
-                $data['status'] = $col??null;
+                $data['status'] = trim($col)??null;
               }
               if ($kcol > 29) {
                 break;
