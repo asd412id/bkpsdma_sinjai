@@ -9,7 +9,7 @@
         <h3>BKPSDMA Kabupaten Sinjai</h3>
         <form class="form-search" action="{{ route('search.index') }}" method="get">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Masukkan NIP Pegawai ..." autofocus required>
+            <input type="number" name="q" class="form-control" placeholder="Masukkan NIP Pegawai ..." autofocus required>
             <div class="input-group-append">
               <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Cari Pegawai</button>
             </div>
