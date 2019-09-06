@@ -95,7 +95,7 @@
                 </div>
               </div>
             @else
-              <div class="h4 text-danger text-center mb-4"><i class="fas fa-exclamation-circle"></i> Maaf, data yang Anda cari tidak ditemukan!</div>
+              <div class="h4 text-danger text-center m-0"><i class="fas fa-exclamation-circle"></i> Maaf, data yang Anda cari tidak ditemukan!</div>
             @endif
           </div>
         </div>
